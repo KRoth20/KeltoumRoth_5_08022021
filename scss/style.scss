@@ -1,0 +1,36 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+body{
+    font-family:'PT Sans', sans-serif;
+}
+a{
+    font-size: 1.5em;
+    text-decoration: none;
+}
+.text-decoration-none{
+    color: black;
+}
+.bgO{
+    background-color: #f3e9f1;
+}
+
+h1, h2{
+    color: #682d96 !important;
+    
+}
+svg :hover{
+    fill:blue;
+}
+h1{
+    font-size: 2em !important;
+}
+h2{
+    font-size: 1.5em!important;
+}
+
+.product-border 
+{
+    box-shadow: 10px 5px 5px#f3e9f1;
+    ;
+}
+
