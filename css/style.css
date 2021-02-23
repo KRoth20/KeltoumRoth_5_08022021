@@ -9965,4 +9965,21 @@ h2 {
   box-shadow: 10px 5px 5px #f3e9f1;
 }
 
+footer {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  bottom: 0;
+  margin: 0px !important;
+}
+@media (max-width: 767px) {
+  footer {
+    font-size: 0.6em;
+  }
+  footer a img {
+    height: 40px;
+    width: auto;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

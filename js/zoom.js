@@ -1,9 +1,10 @@
 ////////////// Récupérer dans l'url l'Id du produit cliqué /////////////////////////////////////////////////
 function getId(){
-    const param = window.location.search;
+    const param = location.search;
     const id = param.replace("?id=", ""); // Retire ?ID= des parametres de l'URL, Recupère uniquement l'identifiant
     return id;
 }
+
 ///////////////// Ajoute le produit dans le panier avec la lentille sélectionnée par l'utilisateur /////
 function addToBasket(lenseSelected){
     let basketContent = JSON.parse(localStorage.getItem("basketContent"));
@@ -18,7 +19,7 @@ function addToBasket(lenseSelected){
     localStorage.setItem("basketContent", JSON.stringify(basketContent));
 }
 
-///////////////////////// Ajoute les informations du produit cliqué dans la page HTLM ///////////////////
+///////////////////////// Ajoute les informations du produit cliqué dans la page HTML ///////////////////
 function addProductInfo(response){
     //création du cadre de l'appareil photo séléctionné à l'emplacement identifié par l'Id
     const container = document.getElementById("choix");

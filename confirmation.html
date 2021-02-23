@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
-    <title>OrinoCameras, votre produit vintage</title>
+    <title>OrinoCameras, vous remercie pour votre commande</title>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
                     <li class="nav-item active">
                         <a class="nav-link text-decoration-none" href="index.html">Produits</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item active text-decoration-none">
                         <a class="navbar-brand text-decoration-none" href="panier.html"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-cart4" viewBox="0 0 16 16">
                             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
                           </svg>
@@ -36,29 +36,26 @@
             </div>
         </nav>
     </header>
-    
-    <main>
-        <section class="container">
-            <div class="col justify-content-between">
-                <div class="col-xs-auto">
-                    <h1 class="text-center m-5"> Votre produit</h1>
-                </div>
-            </div>
-        </section>
-        <section class="container">
-            <div id="choix"> 
-            </div>
-        </section>
-    </main>
 
+<main>
+    <section class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <h1 class="confirmation-title text-center m-5" id="confirmation">Confirmation de votre commande</h1>
+                <h2 class="confirmation-title text-center">Merci pour votre commande.</h2>
+            </div>
+        </div>
+    </section>
+</main>
     <footer class="row text-center justify-content-between align-items-center bgO ">
-        <a class="col-md-4 text-decoration-none" href="index.html"><img src="images/logo_orinoco.png" alt="logo_Orinico" width="150em"></a>
-        <a class="col-md-4 my-auto text-decoration-none" href="#">Mentions Légales</a>
-        <a class="col-md-4 my-auto text-decoration-none" href="mailto:contact@orinoco.com">Contactez-nous</a>
-    </footer>
+    <a class="col-md-4 text-decoration-none" href="index.html"><img src="images/logo_orinoco.png" alt="logo_Orinico" width="150em"></a>
+    <a class="col-md-4 my-auto text-decoration-none" href="#">Mentions Légales</a>
+    <a class="col-md-4 my-auto text-decoration-none" href="mailto:contact@orinoco.com">Contactez-nous</a>
+</footer>
 
-<script type="text/javascript" src="js/globales.js"></script>
-<script type="text/javascript" src="js/zoom.js"></script>
+<script type="text/javascript" src="js/confirmation.js"></script>
 <script type="text/javascript" src="js/class.js"></script>
+<script type="text/javascript" src="js/cameras.js"></script>
+
 </body>
 </html>
