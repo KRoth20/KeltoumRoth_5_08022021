@@ -1,35 +1,20 @@
-/////////////////////////////// Ajoute les produit du panier dans la page HTML //////////////////////////
+////////// Ajoute les produit du panier dans la page HTML //////////
 function addBasketProduct(container, productInfo, productBasket, basketContent, totalPrice){
     const productContainer = document.createElement("div");
-    productContainer.setAttribute("class", "row justify-content-around mb-5");
-    
-    const divTitle = document.createElement("div");
-    divTitle.setAttribute("class", "col-md-3 ");
-
-    const name = document.createElement("p");
-    name.innerHTML = productInfo.name;
-    
-    const image = document.createElement("img");
-    image.innerHTML = productInfo.imageUrl;
-    image.setAttribute("src", productInfo.imageUrl);
-    image.setAttribute("width", "30%");   
-    
-    //Supprime élément
-    const btn = document.createElement("button"); 
+    productContainer.setAttribute("class", "row justify-content-around align-items-center mb-5");
+    productContainer.innerHTML = `
+    <img width="10%" src="${productInfo.imageUrl}"</img>
+    <p class="col-md-3">${productInfo.name}</p>
+    <div class="col-md-3">${productBasket.lenses}</div>
+    <div class="col-md-3">${productInfo.price/100}  €</div>
+    `
+    const btn = document.createElement ("button");
     btn.innerHTML = "Supprimer";
     btn.setAttribute("class", "bg-light text-dark");
     btn.setAttribute("data-id", productInfo._id);
 
-    const divLenses = document.createElement("div");
-    divLenses.setAttribute("class", "col-md-3");
-    divLenses.innerHTML = productBasket.lenses;
-        
-    const divPrice = document.createElement("div");
-    divPrice.setAttribute("class", "col-md-3");
-    divPrice.innerHTML = productInfo.price + "€";
     totalPrice = totalPrice + productInfo.price;        
-
-    ///////////////////////////// Supprimer un élément du panier ///////////////////////////////////////
+    ////////// Supprimer un élément du panier //////////
     btn.addEventListener('click', function(e){ 
         const id = e.target.getAttribute("data-id");
 
@@ -42,17 +27,13 @@ function addBasketProduct(container, productInfo, productBasket, basketContent, 
         localStorage.setItem("basketContent", JSON.stringify(basketContent)); // Sauvegarde du panier mis à jour
         window.location.href = "panier.html"; // on revient à la page d'acceuil 
     });
-    
-    productContainer.appendChild(divTitle);
-    divTitle.appendChild(name);
-    divTitle.appendChild(image);
-    divTitle.appendChild(btn); 
-    productContainer.appendChild(divLenses);
-    productContainer.appendChild(divPrice);
+
+    productContainer.appendChild(btn);
     container.appendChild(productContainer);
 
     return totalPrice;
 }
+
 
 //////////////////////////Validation Nom, Prénom, Ville expression regulière formulaire////////////////////
 function isAlpha(value){
@@ -158,9 +139,20 @@ function emptyBasketMessage(container){
 
     return container;
 }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// mettre à jour le panier //////////////////////////////////////////////////////
+get = async (url) => {
+    try {
+        let response = await fetch(url);
+        if (response.ok){
+            let dataList = await response.json();
+            return dataList
+        } else {
+            console.log('Retour du serveur : ' + response.status);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
 
 get("http://localhost:3000/api/cameras/").then(function(response){
     //ajouter un élément au panier
@@ -180,7 +172,7 @@ get("http://localhost:3000/api/cameras/").then(function(response){
         }
         // calcul du total
         const totalPriceBasket = document.getElementById("total-price")
-        totalPriceBasket.innerHTML = "Total: " + totalPrice + "€";
+        totalPriceBasket.innerHTML = "Total: " + totalPrice/100 + " €";
     }
 }).catch(function(err){
     console.log(err);

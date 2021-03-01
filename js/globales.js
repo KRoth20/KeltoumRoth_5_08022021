@@ -1,26 +1,26 @@
 ////////////////////////////// RECUPERATION DE L'API////////////////////
-function get(url){
-    // Je crée une fonction pour demander à l'API DE RECUPERER les éléments contenus dans l'url du serveur local,
-        return new Promise(function(resolve, reject)
-            {
-            const request = new XMLHttpRequest();
-            request.open("GET", url);
-            request.onreadystatechange = function(){
-                if (this.readyState === XMLHttpRequest.DONE)
-                {
-                    if(this.status === 200)
-                    {
-                        resolve(JSON.parse(request.responseText));
-                    }
-                    else
-                    {
-                        reject(request.status);
-                    }
-                }
-            };
-            request.send(); 
-            });
-    }
+// function get(url){
+//     // Je crée une fonction pour demander à l'API DE RECUPERER les éléments contenus dans l'url du serveur local,
+//         return new Promise(function(resolve, reject)
+//             {
+//             const request = new XMLHttpRequest();
+//             request.open("GET", url);
+//             request.onreadystatechange = function(){
+//                 if (this.readyState === XMLHttpRequest.DONE)
+//                 {
+//                     if(this.status === 200)
+//                     {
+//                         resolve(JSON.parse(request.responseText));
+//                     }
+//                     else
+//                     {
+//                         reject(request.status);
+//                     }
+//                 }
+//             };
+//             request.send(); 
+//             });
+//     }
     
     // console.log(get("http://localhost:3000/api/cameras"));
     

@@ -16,9 +16,6 @@ a{
 
 h1, h2{
     color: #682d96 !important;
-    // @media (max-width:767px){
-    //     font-size: 0.1em !important;
-    // }
     
 }
 svg :hover{
@@ -30,17 +27,27 @@ h1{
 h2{
     font-size: 1.5em!important;
 }
+h3{
+    font-size: 1em!important;
+    color: #682d96 !important;
+}
 
-.product-border 
-{
-    box-shadow: 10px 5px 5px#f3e9f1;
-    ;
+header{
+    @media (max-width:767px){
+        & a img{
+            height: 100px;
+            width: auto;
+      }  }
+}
+
+.height{
+    height: 650px!important;
 }
 
 footer{
         width: 100%;
         height: 100px;
-        position: relative;
+        position: fixed;
         bottom: 0;
         margin: 0px!important;
         @media (max-width:767px){
