@@ -1,146 +1,45 @@
-////////// Ajoute les produit du panier dans la page HTML //////////
+///////////////////// AFFICHER PANIER DANS LE HTML//////// /////////////////////////////
 function addBasketProduct(container, productInfo, productBasket, basketContent, totalPrice){
-    const productContainer = document.createElement("div");
+    const productContainer = document.createElement("div");// prépare l'emplacement et le format du panier avec les données à insérer
     productContainer.setAttribute("class", "row justify-content-around align-items-center mb-5");
     productContainer.innerHTML = `
     <img width="10%" src="${productInfo.imageUrl}"</img>
     <p class="col-md-3">${productInfo.name}</p>
     <div class="col-md-3">${productBasket.lenses}</div>
-    <div class="col-md-3">${productInfo.price/100}  €</div>
+    <div class="col-md-3">${productInfo.price/100}€</div>
     `
-    const btn = document.createElement ("button");
+    const btn = document.createElement ("button");// crée le format d'un bouton qui permet la suppression d'un produit
     btn.innerHTML = "Supprimer";
     btn.setAttribute("class", "bg-light text-dark");
-    btn.setAttribute("data-id", productInfo._id);
+    btn.setAttribute("data-id", productInfo._id);//le bouton est rattaché à l'Id du produit
 
-    totalPrice = totalPrice + productInfo.price;        
+    totalPrice = totalPrice + productInfo.price;      
+
     ////////// Supprimer un élément du panier //////////
-    btn.addEventListener('click', function(e){ 
+    btn.addEventListener('click', function(e){ //crée l'action de supprimer au click sur le bouton
         const id = e.target.getAttribute("data-id");
 
-        for (let x = 0; x != basketContent.length; x = x + 1){
-            if (basketContent[x].id === id){
-                basketContent.splice(x, 1);
-                break;
+        for (let x = 0; x != basketContent.length; x = x + 1){//parcourt le panier de produit en produit
+            if (basketContent[x].id === id){//si id est trouvé 
+                basketContent.splice(x, 1);//suppression d'un seul élément en partant de la position de l'id
+                break;//arrête la boucle
             }
         }
-        localStorage.setItem("basketContent", JSON.stringify(basketContent)); // Sauvegarde du panier mis à jour
-        window.location.href = "panier.html"; // on revient à la page d'acceuil 
+        localStorage.setItem("basketContent", JSON.stringify(basketContent)); // sauvegarde du panier mis à jour
+        window.location.href = "panier.html"; // actualise la page
     });
 
-    productContainer.appendChild(btn);
+    productContainer.appendChild(btn);// intègre le bouton à l'emplacement dans le HTML
     container.appendChild(productContainer);
 
-    return totalPrice;
-}
-
-
-//////////////////////////Validation Nom, Prénom, Ville expression regulière formulaire////////////////////
-function isAlpha(value){
-    return /[a-zA-Z]+/.test(value);
-}
-
-////////////////////////////////////// Validation mail expression regulière formulaire////////////////////
-function validateEmail(value){
- if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)){
-    return true;
-  }
-  return false;
-}
-
-////////////////////////////////////// Validation adresse expression regulière formulaire////////////////////
-function isAdresse(value){
-    return /\w+/.test(value);
-}
-
-////////////////////////// Message erreur du formulaire quand les champs ne sont pas remplis ///////////////////
-function checkFormErrors(orderValidity){
-    const error = document.getElementById("error");
-    error.innerHTML = "";
-    let inputIds = ["name", "firstname", "email", "adresse", "city"];
-    let inputTexts = ["nom", "prénom", "mail", "adresse", "ville"];
-    for (let i = 0; i < inputIds.length; i = i + 1){
-        const input = document.getElementById(inputIds[i]);
-        if (input.value === ""){
-            const errorMessage = document.createElement("p");
-            errorMessage.setAttribute("class", "text-danger");
-            errorMessage.innerHTML = "Merci d'indiquer votre " + inputTexts[i];
-            orderValidity = false;
-            error.appendChild(errorMessage);
-        }else{
-            if (inputIds[i] === "name" || inputIds[i] === "firstname" || inputIds[i] === "city"){
-                if (isAlpha(input.value) === false){
-                    const errorMessage = document.createElement("p");
-                    errorMessage.setAttribute("class", "text-warning");
-                    errorMessage.innerHTML = "Merci d'écrire votre " + inputTexts[i] + " en toutes lettres";
-                    orderValidity = false;
-                    error.appendChild(errorMessage);
-                }
-            }
-            if (inputIds[i] === "email"){
-                if (validateEmail(input.value) === false){
-                    const errorMessage = document.createElement("p");
-                    errorMessage.setAttribute("class", "text-warning");
-                    errorMessage.innerHTML = "Merci d'écrire un " + inputTexts[i] + " valide";
-                    orderValidity = false;
-                    error.appendChild(errorMessage);
-                }
-            }
-            if (inputIds[i] === "adresse"){
-                if (isAdresse(input.value) === false){
-                    const errorMessage = document.createElement("p");
-                    errorMessage.setAttribute("class", "text-warning");
-                    errorMessage.innerHTML = "Merci d'écrire une " + inputTexts[i] + " valide";
-                    orderValidity = false;
-                    error.appendChild(errorMessage);
-                }
-            }
-        }
-    }
-    return orderValidity;
+    return totalPrice; //récupère le calcul du prix total (montant du panier + montant du nouveau produit)
 }
 
 
 
-///////////////////////////////////////////// Envoyer la requête de commande/////////////////////////////////////////////////
-function sendOrder(){
-    const name = document.getElementById("name").value;
-    const firstname = document.getElementById("firstname").value;
-    const mail = document.getElementById("email").value;
-    const adress = document.getElementById("adresse").value;
-    const city = document.getElementById("city").value;  
+////////////////////// //////// IMPLEMENTATION DU PANIER  //////////////////////////////////////////
 
-    const formInformation = new infoForm (name, firstname, mail, adress, city);
-    const basketContent = JSON.parse(localStorage.getItem("basketContent"));
-
-    let idOrder = [];
-    
-    for (let i = 0; i < basketContent.length; i =  i + 1){
-        basketContent[i].id;
-        idOrder.push(basketContent[i].id);
-    }
-    const command = new orderInfo(formInformation, idOrder);
-    post("http://localhost:3000/api/cameras/order", command).then( function(response){
-        localStorage.setItem("basketContent", JSON.stringify([])); 
-        localStorage.setItem("orderConfirmation", response.orderId);
-        window.location.href = "confirmation.html"; // on va à la page de confirmation
-    }).catch(function(err){
-        console.log(err);
-        if(err === 0){ // requete ajax annulée
-            alert("serveur HS");
-        }
-    });
-}
-/////////////////////////////////// Message panier vide //////////////////////////////////////////////////////
-function emptyBasketMessage(container){
-    const emptyBasket = document.createElement("div")
-    emptyBasket.innerHTML = "Votre panier est vide";
-    container.appendChild(emptyBasket);
-
-    return container;
-}
-/////////////////////////////////// mettre à jour le panier //////////////////////////////////////////////////////
-get = async (url) => {
+get = async (url) => { //récupération des données par l'URL
     try {
         let response = await fetch(url);
         if (response.ok){
@@ -155,41 +54,37 @@ get = async (url) => {
 }
 
 get("http://localhost:3000/api/cameras/").then(function(response){
-    //ajouter un élément au panier
-    const basketContent = JSON.parse(localStorage.getItem("basketContent"));//récuperation local storage
-    const container = document.getElementById("product-basket");
-    if (basketContent.length === 0){ //Message panier vide
-        emptyBasketMessage(container);
-    } else {
-        let totalPrice = 0;
-        for (let productBasket of basketContent){
-            for (let productInfo of response){
-                if (productBasket.id === productInfo._id){
-                    totalPrice = addBasketProduct(container, productInfo, productBasket, basketContent, totalPrice);
-                    localStorage.setItem("totalPriceConfirmationPage", totalPrice);
+   
+    const basketContent = JSON.parse(localStorage.getItem("basketContent"));//on utilise le contenu du panier dans le localStorage
+    const container = document.getElementById("product-basket");//on crée l'emplacement du contenu dans le HTML
+    if (basketContent.length === 0){ 
+        emptyBasketMessage(container);// si le contenu est nul on affiche le message panier vide 
+    } else { //sinon 
+        let totalPrice = 0; // en partant de 0
+        for (let productBasket of basketContent){ //pour chaque produit récupéré du LocalStorage
+            for (let productInfo of response){ // et pour chaque produit récupéré du LocalHost par l'API
+                if (productBasket.id === productInfo._id){ // si l'id du produit déjà stocké dans le panier = à l'id de la base de données
+                    totalPrice = addBasketProduct(container, productInfo, productBasket, basketContent, totalPrice);//ajoute le produit à 0 et implémente le HTML
+                    localStorage.setItem("totalPriceConfirmationPage", totalPrice);//et on met à jour le Local Storage avec une nouvelle "clé" qui a comme "valeur" le résultat de la fonction d'ajout
                 }
             }
         }
-        // calcul du total
-        const totalPriceBasket = document.getElementById("total-price")
-        totalPriceBasket.innerHTML = "Total: " + totalPrice/100 + " €";
+        // affiche le montant total dans le HTML
+        document.getElementById("total-price").innerHTML = "Total: " + totalPrice/100 + "€";
     }
-}).catch(function(err){
+
+}).catch(function(err){ //récupère les exceptions et affiche un message d'erreur
     console.log(err);
-    if(err === 0){ // requete ajax annulée
+    if(err === 0){ 
         alert("serveur HS");
     }
 });
 
-// Message d'erreur formulaire de validation
-const btn = document.getElementById("btn");
+// Message panier vide //
+function emptyBasketMessage(container){
+    const emptyBasket = document.createElement("div")
+    emptyBasket.innerHTML = "Votre panier est vide";
+    container.appendChild(emptyBasket);
 
-btn.addEventListener("click", function(event){
-    event.preventDefault();
-    let orderValidity = true;
-    orderValidity = checkFormErrors(orderValidity);
-
-    if (orderValidity === true){
-        sendOrder();
-    }
-});
+    return container;// récupère le message
+}

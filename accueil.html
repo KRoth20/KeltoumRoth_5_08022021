@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "preconnect" href = "https://fonts.gstatic.com">
-    <link href = "https://fonts.googleapis.com/css2? family = PT + Sans & display = swap" rel = "feuille de style"> 
+    <link rel ="preconnect" href="https://fonts.gstatic.com">
+    <link href ="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="feuille de style"> 
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
-    <title>OrinoCameras,le spécialiste de l'appareil photo professionnel</title>
+    <title>OrinoCam,le spécialiste de l'appareil photo professionnel</title>
 </head>
 
 <body>
     <header>
         <nav class="row justify-content-between navbar navbar-expand-lg bgO navbar-light">
-            <a class="col-8 navbar-brand" href="index.html"><img src="images/logo_orinoco.png" alt="logo_Orinico">
+            <a class="col-8 navbar-brand" href="accueil.html"><img src="images/logo_orinoco.png" alt="logo_Orinico">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
             <div id="navbarContent" class="col-4 collapse navbar-collapse">
                 <ul class="navbar nav my-auto mx-auto">
                     <li class="nav-item active">
-                        <a class="nav-link text-decoration-none" href="index.html">Produits</a>
+                        <a class="nav-link text-decoration-none" href="accueil.html">Produits</a>
                     </li>
                     <li class="nav-item active text-decoration-none">
                         <a class="navbar-brand text-decoration-none" href="panier.html"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-cart4" viewBox="0 0 16 16">
@@ -36,24 +36,34 @@
             </div>
         </nav>
     </header>
-
-    <div class="container">
-        <h1>Carrousel</h1>
-        <div id="stock" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
+    
+    <main>
+        <section class="container mb-5 pb-5">
+            <div class="col justify-content-between">
+                <div class="col-xs-auto">
+                    <h1 class="text-center m-4"> Orino Cameras, matériel vintage, mais pas seulement!</h1>
+                </div>
+                <div class="col-xs-auto">
+                    <h2 class="text-center m-1">
+                        Faites votre choix 
+                    <a class="arrow" href="#stock"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="35" fill="#682d96" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                      </svg>
+                    </a></h2>
+                    <div id="stock" class="row pt-4">
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+    
+    <footer class="row text-center justify-content-between align-items-center bgO">
+        <a class="col-md-4 text-decoration-none" href="accueil.html"><img src="images/logo_orinoco.png" alt="logo_Orinico" width="150"></a>
+        <a class="col-md-4 my-auto text-decoration-none" href="#">Mentions Légales</a>
+        <a class="col-md-4 my-auto text-decoration-none" href="mailto:contact@orinoco.com">Contactez-nous</a>
+    </footer>
 
-<footer class="row text-center justify-content-between bgO">
-    <a class="col-md-4 text-decoration-none" href="index.html"><img src="images/logo_orinoco.png" alt="logo_Orinico" width="150em"></a>
-    <a class="col-md-4 my-auto text-decoration-none" href="#">Mentions Légales</a>
-    <a class="col-md-4 my-auto text-decoration-none" href="mailto:contact@orinoco.com">Contactez-nous</a>
-</footer>
-
-<script type="text/javascript" src="js/slider.js"></script>
+<script src="js/accueil.js"></script>
 
 </body>
 </html>

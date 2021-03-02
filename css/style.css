@@ -9966,8 +9966,8 @@ h3 {
   color: #682d96 !important;
 }
 
-.product-border {
-  box-shadow: 10px 5px 5px #f3e9f1;
+p {
+  font-size: 1em !important;
 }
 
 @media (max-width: 767px) {
