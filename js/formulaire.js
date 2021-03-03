@@ -15,49 +15,42 @@ function validateEmail(value){
 
 // adresse : chiffres et/ou lettres acceptés//
 function isAdresse(value){
-    return /\w+/.test(value);
+    return /^([0-9]{1,})[^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/.test(value);
 }
 
 // message d'erreur du formulaire quand les champs ne sont pas correctement remplis //
 function checkFormErrors(orderValidity){
-    const error = document.getElementById("error"); //crée un emplacement vide dans le HTML pour indiquer l'éventuel message 
+    //crée un emplacement vide dans le HTML pour indiquer l'éventuel message //
+    const error = document.getElementById("error"); 
     error.innerHTML = "";
-    let inputIds = ["name", "firstname", "email", "adresse", "city"]; //crée un tableau avec les id dans un certain ordre
-    let inputTexts = ["nom", "prénom", "mail", "adresse", "ville"];// crée un tableau avec le texte en français qui correspond à chaque id dans le même ordre
-    for (let i = 0; i < inputIds.length; i = i + 1){//parcourt la liste des inputId par indice
+    //crée un tableau avec les id dans un certain ordre
+    let inputIds = ["name", "firstname", "email", "adresse", "city"]; 
+    // crée un tableau avec le texte en français qui correspond à chaque id dans le même ordre
+    let inputTexts = ["nom", "prénom", "mail", "adresse", "ville"];
+    
+    for (let i = 0; i < inputIds.length; i = i + 1){ //parcourt la liste des Id des champs saisis par indice
         const input = document.getElementById(inputIds[i]);
-        if (input.value === ""){// si input PAS rempli
-            const errorMessage = document.createElement("p"); //crée un p
-            errorMessage.setAttribute("class", "text-danger");
-            errorMessage.innerHTML = "Merci d'indiquer votre " + inputTexts[i];
+        if (input.value === ""){ // si input PAS rempli
+            error.innerHTML += `<p class="text-danger"> Merci d'indiquer votre ${inputTexts[i]}</p>` // ajoute dans l'emplacement "error" le texte prévu + l'inputText correspondant à l'indice
             orderValidity = false;
-            error.appendChild(errorMessage);// ajoute dans l'emplacement "error" le texte prévu + l'inputText correspondant à l'indice
+            
         }else{
             if (inputIds[i] === "name" || inputIds[i] === "firstname" || inputIds[i] === "city"){ 
                 if (isAlpha(input.value) === false){ //si input nom,prénom et ville MAL rempli
-                    const errorMessage = document.createElement("p");
-                    errorMessage.setAttribute("class", "text-warning");
-                    errorMessage.innerHTML = "Merci d'écrire votre " + inputTexts[i] + " en toutes lettres";
+                    error.innerHTML += `<p class="text-warning"> Merci d'écrire votre ${inputTexts[i]} en toutes lettres</p>`
                     orderValidity = false;
-                    error.appendChild(errorMessage);
                 }
             }
             if (inputIds[i] === "email"){
-                if (validateEmail(input.value) === false){// si input mail mal rempli
-                    const errorMessage = document.createElement("p");
-                    errorMessage.setAttribute("class", "text-warning");
-                    errorMessage.innerHTML = "Merci d'écrire un " + inputTexts[i] + " valide";
+                if (validateEmail(input.value) === false){// si input mail MAL rempli
+                    error.innerHTML += `<p class="text-warning"> Merci d'écrire un ${inputTexts[i]} valide</p>`
                     orderValidity = false;
-                    error.appendChild(errorMessage);
                 }
             }
             if (inputIds[i] === "adresse"){
-                if (isAdresse(input.value) === false){// si input adresse mal rempli
-                    const errorMessage = document.createElement("p");
-                    errorMessage.setAttribute("class", "text-warning");
-                    errorMessage.innerHTML = "Merci d'écrire une " + inputTexts[i] + " valide";
+                if (isAdresse(input.value) === false){// si input adresse MALrempli
+                    error.innerHTML += `<p class="text-warning"> Merci d'écrire une ${inputTexts[i]} valide</p>`
                     orderValidity = false;
-                    error.appendChild(errorMessage);
                 }
             }
         }
@@ -69,7 +62,7 @@ function checkFormErrors(orderValidity){
 const btn = document.getElementById("btn");
 
 btn.addEventListener("click", function(event){
-    event.preventDefault();
+    event.preventDefault();//pour ne pas changer de page en cas d'erreur
     let orderValidity = true;
     orderValidity = checkFormErrors(orderValidity);
 
@@ -79,7 +72,7 @@ btn.addEventListener("click", function(event){
 });
 
 
-//////////////////////////RENVOI DANS UN j.son DES DONNEES CONTENUES DANS L'URL DU LOCALHOST PAR L'API//////////////////////////////////////////////
+//////////////////////////RENVOI DANS UN j.son DES DONNEES A L'API//////////////////////////////////////////////
 
 function post(url, jsonBody){
         return new Promise(function(resolve, reject)
@@ -106,26 +99,27 @@ function post(url, jsonBody){
 
 //////////////////////////// ENVOYER LA REQUETE /////////////////////////////////////////////////
 function sendOrder(){
-    //format :
+    //structure pour le HTML ://
     const name = document.getElementById("name").value;
     const firstname = document.getElementById("firstname").value;
     const mail = document.getElementById("email").value;
     const adress = document.getElementById("adresse").value;
     const city = document.getElementById("city").value;  
-
+    //stocke les infos du formulaire 
     const formInformation = new infoForm (name, firstname, mail, adress, city);
+    //rappelle les infos contenus dans le panier
     const basketContent = JSON.parse(localStorage.getItem("basketContent"));
-
+    //contenant vide de la commande à implémenter
     let idOrder = [];
     
-    for (let i = 0; i < basketContent.length; i =  i + 1){//pour chaque produit récupéré du LocalStorage on implémente le contenu de la requête
+    for (let i = 0; i < basketContent.length; i =  i + 1){ //parcourt le panier, et pour chaque indice push l'id dans le contenant de la commande
         basketContent[i].id;
         idOrder.push(basketContent[i].id);
     }
-    const command = new orderInfo(formInformation, idOrder);
+    const command = new orderInfo(formInformation, idOrder); //stocke les infos du formulaire + les infos de la commande
     post("http://localhost:3000/api/cameras/order", command).then( function(response){
-        localStorage.setItem("basketContent", JSON.stringify([])); //récupère les éléments dans le localStorage
-        localStorage.setItem("orderConfirmation", response.orderId); //prépare le message
+        localStorage.setItem("basketContent", JSON.stringify([])); //met à jour le panier avec la commande
+        localStorage.setItem("orderConfirmation", response.orderId); //génère un numéro de commande
         window.location.href = "confirmation.html"; //envoie à la page de confirmation
 
     }).catch(function(err){ //récupère les exceptions et affiche un message d'erreur
