@@ -1,5 +1,5 @@
 ///////////////////// AFFICHER PANIER DANS LE HTML//////// /////////////////////////////
-function addBasketProduct(container, productInfo, productBasket, basketContent, totalPrice){
+function createBasket(container, productInfo, productBasket, basketContent, totalPrice){
     const productContainer = document.createElement("div");// prépare l'emplacement et le format du panier avec les données à insérer
     productContainer.setAttribute("class", "row justify-content-around align-items-center mb-5");
     productContainer.innerHTML = `
@@ -39,7 +39,7 @@ function addBasketProduct(container, productInfo, productBasket, basketContent, 
 
 ////////////////////// //////// IMPLEMENTATION DU PANIER  //////////////////////////////////////////
 
-get = async (url) => { //récupération des données par l'URL
+getBasket = async (url) => { //récupération des données par l'URL
     try {
         let response = await fetch(url);
         if (response.ok){
@@ -53,7 +53,7 @@ get = async (url) => { //récupération des données par l'URL
     }
 }
 
-get("http://localhost:3000/api/cameras/").then(function(response){
+getBasket("http://localhost:3000/api/cameras/").then(function(response){
    
     const basketContent = JSON.parse(localStorage.getItem("basketContent"));//on utilise le contenu du panier dans le localStorage
     const container = document.getElementById("product-basket");//on crée l'emplacement du contenu dans le HTML
@@ -64,7 +64,7 @@ get("http://localhost:3000/api/cameras/").then(function(response){
         for (let productBasket of basketContent){ //pour chaque produit récupéré du LocalStorage
             for (let productInfo of response){ // et pour chaque produit récupéré du LocalHost par l'API
                 if (productBasket.id === productInfo._id){ // si l'id du produit déjà stocké dans le panier = à l'id de la base de données
-                    totalPrice = addBasketProduct(container, productInfo, productBasket, basketContent, totalPrice);//ajoute le produit à 0 et implémente le HTML
+                    totalPrice = createBasket(container, productInfo, productBasket, basketContent, totalPrice);//ajoute le produit à 0 et implémente le HTML
                     localStorage.setItem("totalPriceConfirmationPage", totalPrice);//et on met à jour le Local Storage avec une nouvelle "clé" qui a comme "valeur" le résultat de la fonction d'ajout
                 }
             }

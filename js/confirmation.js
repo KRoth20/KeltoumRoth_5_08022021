@@ -1,4 +1,4 @@
-/////////////////////////////////////// AFFICHAGE DE LA CONFIRMATION DE LA COMMANDE /////////////////////////////////
+///////////////////////// AFFICHAGE DE LA CONFIRMATION DE LA COMMANDE /////////////////////////////////
 
 function addConfirmationText(){
     const confirmationId = localStorage.getItem("orderConfirmation"); // stocke l'ID (N° de commande)récupéré dans le localStorage

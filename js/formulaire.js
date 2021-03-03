@@ -6,7 +6,7 @@ function isAlpha(value){
 }
 
 // mail : lettres et chiffres acceptés, caractère @ obligatoire//
-function validateEmail(value){
+function isEmail(value){
  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)){
     return true;
   }
@@ -42,7 +42,7 @@ function checkFormErrors(orderValidity){
                 }
             }
             if (inputIds[i] === "email"){
-                if (validateEmail(input.value) === false){// si input mail MAL rempli
+                if (isEmail(input.value) === false){// si input mail MAL rempli
                     error.innerHTML += `<p class="text-warning"> Merci d'écrire un ${inputTexts[i]} valide</p>`
                     orderValidity = false;
                 }
@@ -95,7 +95,7 @@ function post(url, jsonBody){
             request.send(JSON.stringify(jsonBody));
         });
         
-    }
+}
 
 //////////////////////////// ENVOYER LA REQUETE /////////////////////////////////////////////////
 function sendOrder(){
