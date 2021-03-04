@@ -8,7 +8,7 @@ function getId(){
 
 ////////// Appeler la fonction de récupération de l'API par ID et implémenter la page HTML avec les données du produit sélectionné //////
 
-function getCamera(url) { //fetch (URL) + promises
+function getCamera(url) { 
     fetch(url)
     .then ((res) => res.json())
     .then ((data) => {
@@ -33,7 +33,7 @@ function getCamera(url) { //fetch (URL) + promises
         document.getElementById('choix').innerHTML = place2; //intègre dans le HTML l'emplacement de la carte sélectionnée 
 
         let place3 = '<option>Merci de choisir une option</option>'; // créé la 1ère option du menu déroulant
-        for (let i = 0; i < data.lenses.length; i = i +1){ //parcourt l'ensembledes lentilles présentes sur l'Id sélectionné
+        for (let i = 0; i < data.lenses.length; i = i +1){ //parcourt l'ensemble des lentilles présentes sur l'Id sélectionné
             place3 += `<option value="${data.lenses[i]}">${data.lenses[i]}</option>`    
             document.getElementById('select').innerHTML = place3;//intègre dans le menu déroulant les différentes options
 

@@ -1,6 +1,6 @@
 ////////// Appeler la fonction de récupération de l'API et implémenter la page HTML avec les données récupérées //////
     
-    function get(url){ // fetch (url) + promises
+    function get(url){ 
         fetch (url)
         .then ((res) => res.json())
         .then((data) => {
@@ -26,7 +26,6 @@
         })
         document.getElementById('stock').innerHTML = place;//intègre l'emplacement des cartes dans le HTML
         })
-        
     }
     
     get("http://localhost:3000/api/cameras") //éxecute la fonction de récupération des données
