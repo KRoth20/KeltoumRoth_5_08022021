@@ -20,35 +20,32 @@ function isAdresse(value){
 
 // message d'erreur du formulaire quand les champs ne sont pas correctement remplis //
 function checkFormErrors(orderValidity){
-    //crée un emplacement vide dans le HTML pour indiquer l'éventuel message //
     const error = document.getElementById("error"); 
     error.innerHTML = "";
-    //crée un tableau avec les id dans un certain ordre
     let inputIds = ["name", "firstname", "email", "adresse", "city"]; 
-    // crée un tableau avec le texte en français qui correspond à chaque id dans le même ordre
     let inputTexts = ["nom", "prénom", "mail", "adresse", "ville"];
     
-    for (let i = 0; i < inputIds.length; i = i + 1){ //parcourt la liste des Id des champs saisis par indice
+    for (let i = 0; i < inputIds.length; i = i + 1){ 
         const input = document.getElementById(inputIds[i]);
-        if (input.value === ""){ // si input PAS rempli
-            error.innerHTML += `<p class="text-danger"> Merci d'indiquer votre ${inputTexts[i]}</p>` // ajoute dans l'emplacement "error" le texte prévu + l'inputText correspondant à l'indice
+        if (input.value === ""){ 
+            error.innerHTML += `<p class="text-danger"> Merci d'indiquer votre ${inputTexts[i]}</p>` 
             orderValidity = false;
             
         }else{
             if (inputIds[i] === "name" || inputIds[i] === "firstname" || inputIds[i] === "city"){ 
-                if (isAlpha(input.value) === false){ //si input nom,prénom et ville MAL rempli
+                if (isAlpha(input.value) === false){ 
                     error.innerHTML += `<p class="text-warning"> Merci d'écrire votre ${inputTexts[i]} en toutes lettres</p>`
                     orderValidity = false;
                 }
             }
             if (inputIds[i] === "email"){
-                if (isEmail(input.value) === false){// si input mail MAL rempli
+                if (isEmail(input.value) === false){
                     error.innerHTML += `<p class="text-warning"> Merci d'écrire un ${inputTexts[i]} valide</p>`
                     orderValidity = false;
                 }
             }
             if (inputIds[i] === "adresse"){
-                if (isAdresse(input.value) === false){// si input adresse MALrempli
+                if (isAdresse(input.value) === false){
                     error.innerHTML += `<p class="text-warning"> Merci d'écrire une ${inputTexts[i]} valide</p>`
                     orderValidity = false;
                 }
@@ -66,8 +63,8 @@ btn.addEventListener("click", function(event){
     let orderValidity = true;
     orderValidity = checkFormErrors(orderValidity);
 
-    if (orderValidity === true){//si les infos contenues dans les inputs sont validées
-        sendOrder();//alors lance la requête au serveur
+    if (orderValidity === true){
+        sendOrder();
     }
 });
 
@@ -112,15 +109,15 @@ function sendOrder(){
     //contenant vide de la commande à implémenter
     let idOrder = [];
     
-    for (let i = 0; i < basketContent.length; i =  i + 1){ //parcourt le panier, et pour chaque indice push l'id dans le contenant de la commande
+    for (let i = 0; i < basketContent.length; i =  i + 1){ //
         basketContent[i].id;
         idOrder.push(basketContent[i].id);
     }
     const command = new orderInfo(formInformation, idOrder); //stocke les infos du formulaire + les infos de la commande
     post("http://localhost:3000/api/cameras/order", command).then( function(response){
-        localStorage.setItem("basketContent", JSON.stringify([])); //met à jour le panier avec la commande
-        localStorage.setItem("orderConfirmation", response.orderId); //génère un numéro de commande
-        window.location.href = "confirmation.html"; //envoie à la page de confirmation
+        localStorage.setItem("basketContent", JSON.stringify([])); 
+        localStorage.setItem("orderConfirmation", response.orderId); 
+        window.location.href = "confirmation.html"; 
 
     }).catch(function(err){ //récupère les exceptions et affiche un message d'erreur
         console.log(err);
